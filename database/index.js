@@ -31,4 +31,17 @@ let save = (repo, callback) => {
 
 }
 
+let getTopRepos = (callback) => {
+  // Retrieve the top 25 repos from the database and return them to the client for rendering.
+  Repo.find().sort({watchers_count: 'desc'}).limit(25)
+    .then(data => {
+      callback(null, data);
+    })
+    .catch(err => {
+      console.log('Failed DB lookup. ', err);
+      callback(err)
+    });
+}
+
 module.exports.save = save;
+module.exports.getTopRepos = getTopRepos;

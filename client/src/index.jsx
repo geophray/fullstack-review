@@ -14,7 +14,15 @@ class App extends React.Component {
 
   // Load top 25 repos in database when component mounts
   componentDidMount () {
-    $.get('/repos', this.render);
+    $.get('/repos')
+    .done(data => {
+      this.setState({
+        repos: data
+      });
+    })
+    .fail(err => {
+      console.error(err);
+    });
   }
 
   search (term) {
@@ -22,7 +30,7 @@ class App extends React.Component {
       .done((data) => console.log('Saved.', data))
       .fail((err) => {
         console.error(err);
-        alert(`Lookup for user ${term} failed. Please try again.`)
+        // alert(`Lookup for user ${term} failed. Please try again.`)
       });
   }
 
