@@ -21,7 +21,9 @@ app.post('/repos', (req, res) => {
     } else {
       // then save the repo information in the database
       // console.log('Successfully retrieved data!', Array.isArray(data));
+      // var count=0;
       data.forEach(repo => db.save(repo, (err, result) => {
+        // console.log(count++);
         if (err) {
           return console.error(err);
         }
@@ -43,7 +45,7 @@ app.get('/repos', (req, res) => {
       res.status(404);
       res.send(err);
     }
-    console.log('Callback successful. ', data);
+    // console.log('Callback successful. ', data);
     res.send(data);
   })
 });
