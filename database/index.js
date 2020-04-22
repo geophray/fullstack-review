@@ -26,7 +26,6 @@ let save = (repo, callback) => {
   })
   newrepo.save((err, repo) => {
     callback(err, repo);
-
   })
 
 }

@@ -10,10 +10,26 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
+    this.getRepos.bind(this);
   }
 
   // Load top 25 repos in database when component mounts
   componentDidMount () {
+    this.getRepos();
+  }
+
+  search (term) {
+    $.post('/repos', {"username": term})
+      .done((data) => {
+        this.getRepos();
+      })
+      .fail((err) => {
+        console.error(err);
+        // alert(`Lookup for user ${term} failed. Please try again.`)
+      });
+  }
+
+  getRepos () {
     $.get('/repos')
     .done(data => {
       this.setState({
@@ -23,15 +39,6 @@ class App extends React.Component {
     .fail(err => {
       console.error(err);
     });
-  }
-
-  search (term) {
-    $.post('/repos', {"username": term})
-      .done((data) => console.log('Saved.', data))
-      .fail((err) => {
-        console.error(err);
-        // alert(`Lookup for user ${term} failed. Please try again.`)
-      });
   }
 
   render () {

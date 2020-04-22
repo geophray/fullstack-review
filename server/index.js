@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.post('/repos', function (req, res) {
+app.post('/repos', (req, res) => {
   // TODO - your code here!
   // This route should take the github username provided
   // and get the repo information from the github API,
@@ -26,13 +26,16 @@ app.post('/repos', function (req, res) {
           return console.error(err);
         }
         console.log(result.name + " saved to the repo collection.");
-      }))
+
+      }));
+      res.status(201);
+      res.send(data);
     }
   });
 
-});
+}, );
 
-app.get('/repos', function (req, res) {
+app.get('/repos', (req, res) => {
   // TODO - your code here!
   // This route should send back the top 25 repos
   db.getTopRepos((err, data) => {
@@ -47,7 +50,7 @@ app.get('/repos', function (req, res) {
 
 let port = process.env.PORT || 1128;
 
-app.listen(port, function() {
+app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
 
